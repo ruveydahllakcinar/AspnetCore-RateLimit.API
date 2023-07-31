@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.AspNetCore.RateLimiting;
+using RateLimit.API.Controllers;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -86,7 +87,12 @@ builder.Services.AddRateLimiter(options =>
 });
 #endregion
 
-
+#region Creating a Customized Rate Limit Policy
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddPolicy<string, CustomRateLimitPolicy>("CustomPolicy");
+});
+#endregion
 
 builder.Services.AddMemoryCache();
 
